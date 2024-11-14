@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class TileProperties : MonoBehaviour
 {
-    public bool hasObjectSpawned = false;
+    [HideInInspector] public bool hasObjectSpawned = false;
 }

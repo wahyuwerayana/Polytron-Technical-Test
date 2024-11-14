@@ -13,17 +13,19 @@ public class TreePlanting : MonoBehaviour
     }
 
     private IEnumerator PlantTree(){
+        yield return new WaitForSeconds(1f);
+
+        // Break jika list sudah habis
         if(dirtTiles.Count == 0){
             Debug.Log("Tree is finished planting");
             yield break;
         }
 
-        yield return new WaitForSeconds(1f);
-
         GameObject currentDirtTile = dirtTiles[0];
         TileProperties tileProperty = currentDirtTile.GetComponent<TileProperties>();
+        bool hasObjectSpawned = tileProperty.hasObjectSpawned;
         
-        if(!tileProperty.hasObjectSpawned){
+        if(!hasObjectSpawned){
             Instantiate(treePrefab, currentDirtTile.transform.position, Quaternion.identity);
             tileProperty.hasObjectSpawned = true;
         }

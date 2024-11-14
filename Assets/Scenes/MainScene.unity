@@ -457,7 +457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f993e5218296fa4e942b468689aee0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilesList:
+  tilesPrefabList:
   - {fileID: 3577201369186796273, guid: 844b0cf043949446d9329d463b8f70fd, type: 3}
   - {fileID: 1226907132953317842, guid: 555bd1e959e4e4f47b7b80dac2193c00, type: 3}
   - {fileID: 7194405105086264326, guid: 9c6c9a93d04de49e29089795420d17a3, type: 3}

@@ -4,23 +4,31 @@ using UnityEngine;
 
 public class TileGenerationSystem : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> tilesList;
+    [SerializeField] private List<GameObject> tilesPrefabList;
     [SerializeField] private int gridSize;
     private TreePlanting treePlantingScript;
 
 
-    private void Start()
-    {
+    private void Start(){
         treePlantingScript = GetComponent<TreePlanting>();
         GenerateRandomTile();
     }
 
     private void GenerateRandomTile(){
         GameObject[,] gridArray = new GameObject[gridSize, gridSize];
+        
+        InitiateEveryTypeOfTiles(gridArray);
+
+        FillRemainingTiles(gridArray);
+
+        treePlantingScript.StartPlantTree();
+    }
+
+    private void InitiateEveryTypeOfTiles(GameObject[,] gridArray){
         HashSet<Vector3Int> usedPositions = new HashSet<Vector3Int>();
 
-        // Taruh tile di tempat random untuk setiap jenis tile
-        foreach(GameObject tile in tilesList){
+        // Taruh satu tile di tempat random untuk setiap jenis tile
+        foreach(GameObject tile in tilesPrefabList){
             Vector3Int tilePosition;
             do{
                 int xLocation = Random.Range(0, gridSize);
@@ -31,27 +39,29 @@ public class TileGenerationSystem : MonoBehaviour
             usedPositions.Add(tilePosition);
             gridArray[tilePosition.x, tilePosition.z] = tile;
             GameObject spawnedTile = Instantiate(tile, tilePosition, Quaternion.identity);
-            if(spawnedTile.CompareTag("Dirt")){
-                treePlantingScript.dirtTiles.Add(spawnedTile);
-            }
+            CheckDirtTile(spawnedTile);
         }
+    }
 
+    private void FillRemainingTiles(GameObject[,] gridArray){
         // Isi sisa tile di tempat yang kosong
         for(int i = 0; i < gridSize; i++){
             for(int j = 0; j < gridSize; j++){
                 if(gridArray[i, j] == null){
-                    GameObject spawnedTile = Instantiate(GetRandomTile(tilesList), new Vector3(i, 0, j), Quaternion.identity);
-                    if(spawnedTile.CompareTag("Dirt")){
-                        treePlantingScript.dirtTiles.Add(spawnedTile);
-                    }
+                    GameObject spawnedTile = Instantiate(GetRandomTile(tilesPrefabList), new Vector3(i, 0, j), Quaternion.identity);
+                    CheckDirtTile(spawnedTile);
                 }
             }
         }
-
-        treePlantingScript.StartPlantTree();
     }
 
-    private GameObject GetRandomTile(List<GameObject> tiles){
-        return tiles[Random.Range(0, tiles.Count)];
+    private void CheckDirtTile(GameObject spawnedTile){
+        if(spawnedTile.CompareTag("Dirt")){
+            treePlantingScript.dirtTiles.Add(spawnedTile);
+        }
+    }
+
+    private GameObject GetRandomTile(List<GameObject> tilesList){
+        return tilesList[Random.Range(0, tilesList.Count)];
     }
 }
