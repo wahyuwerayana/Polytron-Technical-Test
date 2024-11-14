@@ -5,7 +5,7 @@ using UnityEngine;
 public class TreePlanting : MonoBehaviour
 {
     [SerializeField] private GameObject treePrefab;
-    [HideInInspector] public List<GameObject> dirtTiles;
+    [HideInInspector] public List<GameObject> dirtTilesList;
 
 
     public void StartPlantTree(){
@@ -16,12 +16,13 @@ public class TreePlanting : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // Break jika list sudah habis
-        if(dirtTiles.Count == 0){
+        if(dirtTilesList.Count == 0){
             Debug.Log("Tree is finished planting");
             yield break;
         }
-
-        GameObject currentDirtTile = dirtTiles[0];
+        
+        // Tanam pohon yang ada di list dirtTiles
+        GameObject currentDirtTile = dirtTilesList[0];
         TileProperties tileProperty = currentDirtTile.GetComponent<TileProperties>();
         bool hasObjectSpawned = tileProperty.hasObjectSpawned;
         
@@ -30,7 +31,7 @@ public class TreePlanting : MonoBehaviour
             tileProperty.hasObjectSpawned = true;
         }
 
-        dirtTiles.Remove(currentDirtTile);
+        dirtTilesList.Remove(currentDirtTile);
         StartCoroutine(PlantTree());
     }
 }

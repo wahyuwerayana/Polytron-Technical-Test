@@ -57,7 +57,7 @@ public class TileGenerationSystem : MonoBehaviour
 
     private void CheckDirtTile(GameObject spawnedTile){
         if(spawnedTile.CompareTag("Dirt")){
-            treePlantingScript.dirtTiles.Add(spawnedTile);
+            treePlantingScript.dirtTilesList.Add(spawnedTile);
         }
     }
 

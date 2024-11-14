@@ -8,6 +8,7 @@ public class HouseSpawning : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;
     private int score = 0;
     private TreePlanting treePlantingScript;
+    
 
     private void Start() {
         treePlantingScript = GetComponent<TreePlanting>();
@@ -24,6 +25,7 @@ public class HouseSpawning : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         
+        // Raycast dari posisi mouse diklik
         if(Physics.Raycast(ray, out hit, Mathf.Infinity, tileLayer)){
             if(hit.transform.CompareTag("Dirt") || hit.transform.CompareTag("Desert")){
                 TileProperties tileProperties = hit.transform.GetComponent<TileProperties>();
@@ -33,7 +35,7 @@ public class HouseSpawning : MonoBehaviour
                     Instantiate(housePrefab, hit.transform.position, Quaternion.identity);
                 
                     if(hit.transform.CompareTag("Dirt")){
-                        treePlantingScript.dirtTiles.Remove(hit.transform.gameObject);
+                        treePlantingScript.dirtTilesList.Remove(hit.transform.gameObject);
                         score += 10;
                     } else if(hit.transform.CompareTag("Desert")){
                         score += 2;
