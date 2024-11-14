@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class TileGenerationSystem : MonoBehaviour
@@ -14,10 +13,6 @@ public class TileGenerationSystem : MonoBehaviour
     {
         treePlantingScript = GetComponent<TreePlanting>();
         GenerateRandomTile();
-    }
-
-    private GameObject GetRandomTile(List<GameObject> tiles){
-        return tiles[Random.Range(0, tiles.Count)];
     }
 
     private void GenerateRandomTile(){
@@ -54,5 +49,9 @@ public class TileGenerationSystem : MonoBehaviour
         }
 
         treePlantingScript.StartPlantTree();
+    }
+
+    private GameObject GetRandomTile(List<GameObject> tiles){
+        return tiles[Random.Range(0, tiles.Count)];
     }
 }
